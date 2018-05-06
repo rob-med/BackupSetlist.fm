@@ -2,21 +2,23 @@ import pandas as pd
 import requests
 import numpy as np
 import argparse
-API_ENDPOINT = "http://api.setlist.fm/rest/0.1/user/{}/attended.json?p={}"
+API_ENDPOINT = "https://api.setlist.fm/rest/1.0/user/{}/attended?p={}"
 
 
 def backup(username, format):
-    cols = ['@eventDate', 'artist.@mbid', 'artist.@name','venue.@name',
-           'venue.city.@name', 
-           'venue.city.country.@code', 'venue.city.country.@name']
+    cols = ['eventDate', 'artist.mbid', 'artist.name','venue.name',
+           'venue.city.name', 
+           'venue.city.country.code', 'venue.city.country.name']
            
     rename_cols = ['date','artist_id','artist','venue','city','country_code','country']
     gigs_query = API_ENDPOINT.format(username,1)
-    all = (requests.get(gigs_query).json())
-    df = pd.io.json.json_normalize(all['setlists']['setlist'])
+    headers = {'x-api-key': 'YOUR_API_KEY_HERE', 'Accept': 'application/json'}
+    all = requests.get(gigs_query, headers=headers).json()
+    input(all)
+    df = pd.io.json.json_normalize(all['setlist'])
     gigs = df[cols].values
     
-    total = int(all['setlists']['@total'])
+    total = int(all['total'])
     num_pages = int(total/20) + 1
     
     for p in range(2,num_pages+1):
@@ -26,8 +28,8 @@ def backup(username, format):
                 print('Processing.. {} out of {}'.format(20*p, total))
 
             gigs_query = API_ENDPOINT.format(username,p)
-            all = (requests.get(gigs_query).json())
-            df = pd.io.json.json_normalize(all['setlists']['setlist'])
+            all = (requests.get(gigs_query,headers=headers).json())
+            df = pd.io.json.json_normalize(all['setlist'])
             if gigs is not None:
                 gigs = np.concatenate((gigs,df[cols].values), axis=0)
             else:
