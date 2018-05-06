@@ -16,7 +16,8 @@ Backup your data on the Flask-based Web App [backup-setlist.fm](https://backup-s
 
 ## Usage
 
-Replace YOUR_API_KEY_HERE with the API KEY obtained from [setlist.fm](https://www.setlist.fm/settings/api/)
+Replace YOUR_API_KEY_HERE with the API KEY obtained from [setlist.fm](https://www.setlist.fm/settings/api/).
+
 Launch the script with your USERNAME on setlist.fm and the preferred format (options: _csv_ or _excel_)
 ```
 python backup_setlist_fm.py -u USERNAME [-f FORMAT]
