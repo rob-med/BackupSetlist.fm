@@ -1,8 +1,9 @@
 # BackupSetlist.fm
 Easily backup your [setlist.fm](http://setlist.fm) attended gigs data with a csv/excel spreadsheet.
-The output file format is the following:
+The output file contains the following info for every concert:
 ```
-'@eventDate', 'artist.@mbid', 'artist.@name','venue.@name', 'venue.city.@name', 'venue.city.country.@code', 'venue.city.country.@name'
+ 'eventDate', 'artist.mbid', 'artist.name','venue.name','venue.city.name',
+ 'venue.city.country.code', 'venue.city.country.name'
 ```
 
 ## Live Web App
