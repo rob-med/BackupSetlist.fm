@@ -15,7 +15,7 @@ def backup(username, format):
     headers = {'x-api-key': 'YOUR_API_KEY_HERE', 'Accept': 'application/json'}
     all = requests.get(gigs_query, headers=headers).json()
     input(all)
-    df = pd.io.json.json_normalize(all['setlist'])
+    df = pd.json_normalize(all['setlist'])
     gigs = df[cols].values
     
     total = int(all['total'])
@@ -29,7 +29,7 @@ def backup(username, format):
 
             gigs_query = API_ENDPOINT.format(username,p)
             all = (requests.get(gigs_query,headers=headers).json())
-            df = pd.io.json.json_normalize(all['setlist'])
+            df = pd.json_normalize(all['setlist'])
             if gigs is not None:
                 gigs = np.concatenate((gigs,df[cols].values), axis=0)
             else:
